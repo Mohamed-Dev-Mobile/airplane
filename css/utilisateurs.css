@@ -1,0 +1,10 @@
+/* Styles spécifiques à la page utilisateurs */
+.badge-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.badge-danger {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+}

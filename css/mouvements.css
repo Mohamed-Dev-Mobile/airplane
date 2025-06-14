@@ -1,0 +1,9 @@
+/* Styles spécifiques à la page mouvements */
+.badge i {
+  margin-right: 0.25rem;
+}
+
+.badge-secondary {
+  background-color: rgba(100, 116, 139, 0.1);
+  color: var(--text-light);
+}
