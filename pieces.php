@@ -1,32 +1,28 @@
 <?php
-require 'connection.php' ;
+require 'connection.php';
 $result = $conn->query("SELECT * FROM pieces");
-
+$now = new DateTime();
+$date12 = $now->format('Y-m-d H:i:s');
+$type12 = 'sortie';
 
 if (isset($_GET['id'])) {
-    $id = intval($_GET['id']);
-    $reference   = $conn->query("select reference from pieces where id = $id ") ;
-    $type12 = 'sortie';
-    $now = new DateTime();
-    $date1 = $now->format('Y-m-d H:i:s');
 
+  $id = intval($_GET['id']);
 
-    $stmt3 = $conn->prepare("INSERT INTO `mouvement` (`reference`, `date`, `type`) VALUES (?, ?, ?)");
-    $stmt3->bind_param("sss", $reference, $date1, $type12);
-    $stmt3->execute();
+  $reference12 = $conn->query("select reference from pieces where id = $id ");
 
-    
-    $stmt = $conn->prepare("DELETE FROM pieces WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    
+  $stmt3 = $conn->prepare("INSERT INTO `mouvement` (`reference`, `date`, `type`) VALUES (?, ?, ?)");
+  $stmt3->bind_param("sss", $reference12, $date12, $type12);
+  $stmt3->execute();
+
+  $stmt = $conn->prepare("DELETE FROM pieces WHERE id = ?");
+  $stmt->bind_param("i", $id);
+  $stmt->execute();
 }
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,6 +31,7 @@ if (isset($_GET['id'])) {
   <link rel="stylesheet" href="css/pieces.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
   <div class="container">
     <!-- Sidebar -->
@@ -81,13 +78,13 @@ if (isset($_GET['id'])) {
               </tr>
             </thead>
             <tbody>
-              
-              <?php while ($row = $result->fetch_assoc()) {
-    $statut = ($row['quantite'] ?? 0) <= $row['seuil']
-        ? '<span class="badge-outline text-danger">Stock bas</span>'
-        : '<span class="badge-outline">En stock</span>';
 
-    echo "<tr>
+              <?php while ($row = $result->fetch_assoc()) {
+                $statut = ($row['quantite'] ?? 0) <= $row['seuil']
+                  ? '<span class="badge-outline text-danger">Stock bas</span>'
+                  : '<span class="badge-outline">En stock</span>';
+
+                echo "<tr>
         <td>{$row['reference']}</td>
         <td>{$row['designation']}</td>
         <td>{$row['categorie']}</td>
@@ -102,7 +99,7 @@ if (isset($_GET['id'])) {
             </a>
         </td>
     </tr>";
-} ?>
+              } ?>
 
             </tbody>
           </table>
@@ -116,7 +113,8 @@ if (isset($_GET['id'])) {
   <script src="js/data-store.js"></script>
   <script src="js/utils.js"></script>
   <script src="js/add-piece.js"></script>
-  
+
 
 </body>
+
 </html>

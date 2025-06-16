@@ -1,3 +1,29 @@
+<?php
+require 'connection.php';
+$myCount ;
+$sql = "SELECT COUNT(*) AS total FROM pieces";
+$result = $conn->query($sql);
+
+if ($result) {
+    $row = $result->fetch_assoc();
+    $myCount = $row['total'] ;
+} else {
+    echo "Error: " . $conn->error;
+    $myCount = 0 ;
+}
+
+$myCount1 ;
+$sql1 = "SELECT COUNT(*) AS total1 FROM mouvement";
+$result1 = $conn->query($sql1);
+
+if ($result1) {
+    $row1 = $result1->fetch_assoc();
+    $myCount1 = $row1['total1'] ;
+} else {
+    echo "Error: " . $conn->error;
+    $myCount1 = 0 ;
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -41,7 +67,7 @@
               <i class="fas fa-box"></i>
             </div>
             <div class="card-body">
-              <div class="stat-value">1,248</div>
+              <div class="stat-value"><?php echo $myCount ?></div>
               <p class="stat-change">+12% par rapport au mois dernier</p>
             </div>
           </div>
@@ -52,7 +78,7 @@
               <i class="fas fa-clipboard-list"></i>
             </div>
             <div class="card-body">
-              <div class="stat-value">324</div>
+              <div class="stat-value"><?php echo $myCount1 ?></div>
               <div class="badge-container">
                 <span class="badge">
                   <i class="fas fa-arrow-up text-success"></i>

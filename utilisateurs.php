@@ -86,15 +86,15 @@
           if ($result->num_rows > 0) {
             echo '<table class="table">';
             echo '<thead>
-            <tr>
-                <th>Nom</th>
-                <th>Email</th>
-                <th>Rôle</th>
-                <th>Statut</th>
-                <th>Dernière connexion</th>
-                <th>Actions</th>
-            </tr>
-          </thead><tbody>';
+              <tr>
+                  <th>Nom</th>
+                  <th>Email</th>
+                  <th>Rôle</th>
+                  <th>Statut</th>
+                  <th>Dernière connexion</th>
+                  <th>Actions</th>
+              </tr>
+            </thead><tbody>';
 
             while ($row = $result->fetch_assoc()) {
               echo '<tr>';
@@ -105,17 +105,16 @@
               echo '<td>' . htmlspecialchars($row['date_conexion']) . '</td>';
               echo '<td>
                 <div class="dropdown">
-                  
-                  <form action="delete_utilisateur.php" method="POST" style="display:inline;" onsubmit="return confirm("Supprimer cet utilisateur ?");">
-                  <input type="hidden" name="id" value="5">
-                  <button type="submit" class="btn btn-sm btn-outline-danger">
-                  <i class="fas fa-trash"></i> Supprimer
-                  </button>
-                  </form>
+                  <a href="delete_utilisateur.php?id=' . $row["id"] . '" 
+                     class="dropdown-item text-danger" 
+                     onclick="return confirm(\'Confirmer la suppression ?\')">
+                     <i class="fas fa-trash"></i> Supprimer
+                  </a>
                 </div>
               </td>';
               echo '</tr>';
             }
+
             echo '</tbody></table>';
           } else {
             echo "Aucun utilisateur trouvé.";
@@ -123,9 +122,9 @@
 
           $conn->close();
           ?>
-
         </div>
       </div>
+
     </main>
   </div>
 
